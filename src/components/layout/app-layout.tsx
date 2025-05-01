@@ -13,7 +13,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from '@/components/ui/sidebar';
-import { Home, FlaskConical, ClipboardCheck, MessageSquareText, Settings } from 'lucide-react';
+import { Home, FlaskConical, ClipboardCheck, MessageSquareText, Settings, CheckSquare } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image'; // Import next/image
 import { usePathname } from 'next/navigation';
@@ -24,7 +24,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   // Function to determine if a link is active
-  const isActive = (href: string) => pathname === href;
+  const isActive = (href: string) => pathname.startsWith(href); // Use startsWith for nested routes
 
   return (
     <SidebarProvider defaultOpen={true}>
@@ -46,7 +46,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
           <SidebarMenu>
             <SidebarMenuItem>
               <Link href="/" passHref legacyBehavior>
-                <SidebarMenuButton tooltip="Home" isActive={isActive('/')}>
+                <SidebarMenuButton tooltip="Home" isActive={pathname === '/'}> {/* Exact match for home */}
                   <Home />
                   <span>Home</span>
                 </SidebarMenuButton>
@@ -57,6 +57,14 @@ export function AppLayout({ children }: { children: ReactNode }) {
                 <SidebarMenuButton tooltip="Simulations" isActive={isActive('/simulations')}>
                   <FlaskConical />
                   <span>Simulations</span>
+                </SidebarMenuButton>
+              </Link>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+              <Link href="/checklists" passHref legacyBehavior>
+                <SidebarMenuButton tooltip="Checklists" isActive={isActive('/checklists')}>
+                  <CheckSquare />
+                  <span>Checklists</span>
                 </SidebarMenuButton>
               </Link>
             </SidebarMenuItem>
@@ -92,7 +100,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="flex items-center justify-between border-b p-4 md:justify-end">
+        <header className="flex items-center justify-between border-b p-4 md:justify-end print:hidden">
           <SidebarTrigger className="md:hidden" />
           {/* Add user profile/login button here if needed */}
           <Button variant="outline" size="sm">Login</Button>

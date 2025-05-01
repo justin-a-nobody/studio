@@ -15,6 +15,10 @@ const Progress = React.forwardRef<
       "relative h-4 w-full overflow-hidden rounded-full bg-secondary",
       className
     )}
+    value={value} // Pass value to the primitive for accessibility
+    aria-valuenow={value} // Announce current value
+    aria-valuemin={0} // Standard min value
+    aria-valuemax={100} // Standard max value
     {...props}
   >
     <ProgressPrimitive.Indicator
