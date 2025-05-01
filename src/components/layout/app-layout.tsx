@@ -15,9 +15,10 @@ import {
 } from '@/components/ui/sidebar';
 import { Home, FlaskConical, ClipboardCheck, MessageSquareText, Settings } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image'; // Import next/image
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import Logo from 'public/placeholder.svg'; // Import the SVG
+// Removed the direct SVG import: import Logo from 'public/placeholder.svg';
 
 export function AppLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -30,7 +31,14 @@ export function AppLayout({ children }: { children: ReactNode }) {
       <Sidebar>
         <SidebarHeader className="p-4">
           <Link href="/" className="flex items-center gap-2">
-            <Logo className="h-6 w-6 text-primary" /> {/* Use the imported SVG component */}
+            {/* Use next/image with src pointing to the public file */}
+            <Image
+              src="/placeholder.svg"
+              alt="EnviroClean Logo"
+              width={32} // Set appropriate width
+              height={32} // Set appropriate height
+              className="text-primary" // Tailwind classes might not directly style SVGs via className here, color can be set in the SVG or via CSS filters if needed.
+            />
             <span className="text-lg font-semibold">EnviroClean</span>
           </Link>
         </SidebarHeader>
